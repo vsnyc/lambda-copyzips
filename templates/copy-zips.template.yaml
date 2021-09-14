@@ -1,4 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
 Description: This CloudFormation Template invokes another template responsible for
   copying files to a local region S3 Bucket for AWS Lambda. (qs-1s1i3qaas)
 Parameters:
@@ -47,6 +49,18 @@ Parameters:
 Metadata:
   # this is a no-op, to work around linting for unused parameter, which we need to retain for compatability
   UnusedParam: !Ref QSS3BucketRegion
+  AWS::ServerlessRepo::Application:
+    Name: serverless-lambda-copyzips
+    Description: This application creates a Lambda function that can be invoked from another template responsible for copying files to a local region S3 Bucket for AWS Lambda. (qs-1s1i3qaas)
+    Author: Vinod Shukla
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE.txt
+    ReadmeUrl: README.md
+    Labels: [ 'lambda', 'serverless', 's3', 'lambda-code-staging' ]
+    HomePageUrl: https://github.com/vsnyc/lambda-copyzips
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/vsnyc/lambda-copyzips
+
 Conditions:
   CreateDestBucket: !Equals [!Ref DestinationBucket, ""]
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
@@ -74,6 +88,8 @@ Resources:
           Principal:
             Service: lambda.amazonaws.com
           Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
       - PolicyName: ConfigPolicy
         PolicyDocument:
