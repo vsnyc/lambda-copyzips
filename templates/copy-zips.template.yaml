@@ -58,7 +58,7 @@ Metadata:
     ReadmeUrl: README.md
     Labels: [ 'lambda', 'serverless', 's3', 'lambda-code-staging' ]
     HomePageUrl: https://github.com/vsnyc/lambda-copyzips
-    SemanticVersion: 0.0.1
+    SemanticVersion: 0.0.2
     SourceCodeUrl: https://github.com/vsnyc/lambda-copyzips
 
 Conditions:
